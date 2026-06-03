@@ -63,6 +63,50 @@ This project helped me understand:
 - CRUD Operations
 - API Testing with Postman
 
+## Project Structure
+
+```text
+nodejs-blog-api
+├── controllers
+├── middleware
+├── models
+├── routes
+├── server.js
+└── package.json
+```
+
+## Skills Demonstrated
+
+- REST API Development
+- JWT Authentication
+- MongoDB Database Integration
+- Express Middleware
+- CRUD Operations
+- API Testing using Postman
+- Error Handling
+- Authorization & Access Control
+
+## Screenshots
+
+### User Registration
+![Register](Screenshots/register.png)
+
+### User Login
+![Login](Screenshots/login.png)
+
+### Create Post
+![Create Post](Screenshots/create-post.png)
+
+### Get Posts
+![Get Posts](Screenshots/get-post.png)
+
+### Update Post
+![Update Post](Screenshots/update-post.png)
+
+### Delete Post
+![Delete Post](Screenshots/delete-post.png)
+```
+
 ## Author
 
 Mohamad Akram
