@@ -184,9 +184,33 @@ const createPost = async (req, res, next) => {
 
 const getPost = async (req, res, next) => {
     try{
-        const posts = await Post.find().populate("user", "username role");
+        const search = req.query.search || "";
 
-        res.json(posts);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5;
+
+        const skip = (page - 1) * limit;
+
+        const query = {
+            title: {
+                $regex: search,
+                $options: "i"
+            }
+        };
+
+        const posts = await Post.find(query)
+        .skip(skip)
+        .limit(limit)
+        .populate("user", "username role");
+
+        const totalPosts = await Post.countDocuments(query);
+
+        res.json({
+            currentPage: page,
+            totalPages: Math.ceil(totalPosts / limit),
+            totalPosts,
+            posts
+        });
     } catch (error){
         next(error);
     }

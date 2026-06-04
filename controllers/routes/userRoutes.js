@@ -2,6 +2,10 @@ const express = require("express");
 
 const router = express.Router();
 
+const {body} = require("express-validator");
+
+const validateRequest = require("../../middleware/validationMiddleware");
+
 const { 
     loginUser,
     createUser,
@@ -18,8 +22,42 @@ const {
     authMiddleware,
     adminMiddleware } = require("../../middleware/authMiddleware");
 
-router.post("/login", loginUser);
-router.post("/", createUser);
+router.post("/login", 
+    [
+        body("username")
+            .notEmpty()
+            .withMessage("Username is required"),
+
+        body("password")
+            .notEmpty()
+            .withMessage("Password is required")
+    ],
+    validateRequest,
+    loginUser
+);
+
+router.post("/",
+    [
+        body("username")
+        .notEmpty()
+        .withMessage("Username is required")
+        .isLength({min: 6})
+        .withMessage("Username must be atleast 3 characters"),
+
+        body("")
+        .notEmpty()
+        .withMessage("Password is required")
+        .isLength({min: 6})
+        .withMessage("Username must be atleast 6 characters"),
+
+        body("")
+        .optional()
+        .isIn(["admin", "staff"])
+        .withMessage("Role must be admin or staff")
+    ],
+    validateRequest,
+    createUser
+);
 
 router.post("/posts", authMiddleware, createPost);
 router.get("/posts", authMiddleware, getPost);
