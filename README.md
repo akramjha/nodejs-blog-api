@@ -6,11 +6,12 @@ A RESTful API developed using Node.js, Express.js, and MongoDB. The application 
 
 ## Features
 
-### User Authentication
+### Authentication & Authorization
 - User Registration
 - User Login
 - Password Hashing using bcrypt
 - JWT Authentication
+- Role-Based Authorization
 
 ### Blog Management
 - Create Post
@@ -18,10 +19,18 @@ A RESTful API developed using Node.js, Express.js, and MongoDB. The application 
 - Update Own Posts
 - Delete Own Posts
 
+### Advanced Features
+- Pagination Support
+- Search Functionality
+- Comment System
+- Request Validation
+- Swagger API Documentation
+
 ### Security
 - Protected Routes
 - Ownership Verification
-- Role-Based Authorization
+- Input Validation
+- Middleware Authentication
 
 ## Technologies Used
 
@@ -79,12 +88,31 @@ nodejs-blog-api
 
 - REST API Development
 - JWT Authentication
-- MongoDB Database Integration
+- MongoDB Database Design
 - Express Middleware
 - CRUD Operations
+- Pagination Implementation
+- Search Functionality
+- API Documentation using Swagger
+- Request Validation
+- Comment System Design
 - API Testing using Postman
-- Error Handling
-- Authorization & Access Control
+
+## Architecture
+
+Client Application
+↓
+REST API
+↓
+Express.js Server
+↓
+MongoDB Database
+
+Authentication:
+JWT Token-Based Authentication
+
+Documentation:
+Swagger API Documentation
 
 ## Screenshots
 
@@ -105,6 +133,19 @@ nodejs-blog-api
 
 ### Delete Post
 ![Delete Post](Screenshots/delete-post.png)
+
+### Pagination
+![Pagination](Screenshots/pagination.png)
+
+### Search
+![Search](Screenshots/search.png)
+
+### Comments
+![Comments](Screenshots/comments.png)
+
+### Swagger Documentation
+
+![Swagger](Screenshots/swagger-docs.png)
 ```
 
 ## Author
