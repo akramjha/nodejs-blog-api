@@ -26,41 +26,6 @@ const {
 
 /**
  * @swagger
- * /api/users/login:
- *   post:
- *     summary: Login user
- *     tags: [Users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               password:
- *                 type: string
- *     responses:
- *       200:
- *         description: Login successful
- */
-router.post("/login", 
-    [
-        body("username")
-            .notEmpty()
-            .withMessage("Username is required"),
-
-        body("password")
-            .notEmpty()
-            .withMessage("Password is required")
-    ],
-    validateRequest,
-    loginUser
-);
-
-/**
- * @swagger
  * /api/users:
  *   post:
  *     summary: Create a new user
@@ -115,6 +80,41 @@ router.post("/",
     ],
     validateRequest,
     createUser
+);
+
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     summary: Login user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login successful
+ */
+router.post("/login", 
+    [
+        body("username")
+            .notEmpty()
+            .withMessage("Username is required"),
+
+        body("password")
+            .notEmpty()
+            .withMessage("Password is required")
+    ],
+    validateRequest,
+    loginUser
 );
 
 router.post("/posts", authMiddleware, createPost);
