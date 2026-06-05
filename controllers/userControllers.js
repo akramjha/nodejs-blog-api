@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const Post = require("../models/Post");
+const Comment = require("../models/Comment");
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -189,7 +191,21 @@ const getPost = async (req, res, next) => {
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 5;
 
+        const sort = req.query.sort || "newest";
+
         const skip = (page - 1) * limit;
+
+        let sortOption = {};
+
+        if(sort === "newest"){
+            sortOption = {
+                createdAt : -1
+            };
+        } else if(sort === "oldest"){
+            sortOption = {
+                createdAt : 1
+            };
+        }
 
         const query = {
             title: {
@@ -199,6 +215,7 @@ const getPost = async (req, res, next) => {
         };
 
         const posts = await Post.find(query)
+        .sort(sortOption)
         .skip(skip)
         .limit(limit)
         .populate("user", "username role");
@@ -292,6 +309,44 @@ const deletePost = async (req, res, next) => {
     }
 };
 
+const createComment = async (req, res, next) => {
+    try {
+
+        if(!req.body.text){
+            return res(400).json({
+                message: "Comment text is required"
+            });
+        }
+
+        const comment = await Comment.create({
+            text: req.body.text,
+            user: req.body.id,
+            post: req.params.id
+        });
+
+        res.status(201).json({
+            message: "Comment created successfully",
+            comment: comment
+        });
+    } catch(error){
+        next(error);
+    }
+};
+
+const getComments = async (req, res, next) => {
+    try {
+        const comments = await Comment.find({
+            post: req.params.id
+        })
+        .populate("user", "username role")
+        .sort({ createdAt: -1 });
+
+        res.json(comments);
+    } catch (error){
+        next(error);
+    }
+};
+
 module.exports = {
     loginUser,
     getUser,
@@ -302,5 +357,7 @@ module.exports = {
     getPost,
     getMyPosts,
     updatePost,
-    deletePost
+    deletePost,
+    createComment,
+    getComments
 };

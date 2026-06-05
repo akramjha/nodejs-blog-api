@@ -7,6 +7,8 @@ const User = require("./models/User");
 const Post = require("./models/Post");
 const loggerMiddleware = require("./middleware/loggerMiddleware")
 const errorMiddleware = require("./middleware/errorMiddleware")
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger")
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
@@ -27,6 +29,12 @@ app.get("/test", async (req, res) => {
 
 // login
 app.use("/api/users", userRoutes);
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec)
+);
+
 app.use(errorMiddleware);
 
 // web 3000
